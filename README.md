@@ -1,8 +1,8 @@
 # rust_guess_fruit_game
 
-This game is made using rustc language.
+<h2> This game is made using rustc language. <h2>
 
-<h1 >Guess the correct fruit to win!! <h1>
+<h4> Guess the correct fruit to win!! <h4>
 
 To win this game you have to guess the correct fruit.
 
