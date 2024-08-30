@@ -1,5 +1,8 @@
-use std::io;
+use std::io::{self, Write};
 use rand::{Rng, thread_rng};
+use std::process::Command;
+use std::process::ExitStatus;
+use std::os::unix::prelude::ExitStatusExt;
 
 fn main() {
     
@@ -12,7 +15,7 @@ fn main() {
     let mut random_no: usize = rng.gen_range(0..=3);
     let fruits: [&str; 4] = ["apple", "banana", "guava", "grapes"];
     let mut random_fruit: &str = fruits[random_no];
-
+    only_clear_scr();
     println!("Welcome to guess the fruit game !!");
     println!("");
     println!("Fruits list: {:?}", fruits);
@@ -20,7 +23,7 @@ fn main() {
     println!("");
     
     loop {
-
+        clear_scr();
         // Taking user input
         input.clear();
         if contains {
@@ -82,4 +85,42 @@ fn main() {
             }
         }
     }
+}
+
+fn clear_scr() {
+    let mut string: String = String::new();
+    let mut status: ExitStatus = ExitStatusExt::from_raw(1);
+    println!("");
+    println!("Press any key to continue...");
+    io::stdout().flush().expect("Failed to flush stdout");
+    io::stdin().read_line(&mut string).expect("Failed to read line");
+
+    if cfg!(target_os = "windows") {
+        status = Command::new("cls").status().expect("Failed to execute command");
+    }
+
+    else if cfg!(target_os = "linux") {
+        status = Command::new("clear").status().expect("Failed to execute command");
+    }
+    
+    if status != ExitStatusExt::from_raw(0) {
+        println!("Program exited with status {}", status);
+    }
+}
+
+fn only_clear_scr() {
+    let mut status: ExitStatus = ExitStatusExt::from_raw(1);
+
+    if cfg!(target_os = "windows") {
+        status = Command::new("cls").status().expect("Failed to execute command");
+    }
+
+    else if cfg!(target_os = "linux") {
+        status = Command::new("clear").status().expect("Failed to execute command");
+    }
+    
+    if status != ExitStatusExt::from_raw(0) {
+        println!("Program exited with status {}", status);
+    }
+
 }
