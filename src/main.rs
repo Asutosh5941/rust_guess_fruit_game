@@ -2,7 +2,14 @@ use std::io::{self, Write};
 use rand::{Rng, thread_rng};
 use std::process::Command;
 use std::process::ExitStatus;
+
+#[cfg(target_os = "linux")]
 use std::os::unix::prelude::ExitStatusExt;
+
+#[cfg(target_os = "windows")]
+use std::os::windows::process::ExitStatusExt;
+
+
 
 fn main() {
     
