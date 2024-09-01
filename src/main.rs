@@ -103,7 +103,7 @@ fn clear_scr() {
     io::stdin().read_line(&mut string).expect("Failed to read line");
 
     if cfg!(target_os = "windows") {
-        status = Command::new("cls").status().expect("Failed to execute command");
+        status = Command::new("cmd").arg("/C cls").status().expect("Failed to execute command");
     }
 
     else if cfg!(target_os = "linux") {
@@ -119,7 +119,7 @@ fn only_clear_scr() {
     let mut status: ExitStatus = ExitStatusExt::from_raw(1);
 
     if cfg!(target_os = "windows") {
-        status = Command::new("cls").status().expect("Failed to execute command");
+        status = Command::new("cmd").arg("/C cls").status().expect("Failed to execute command");
     }
 
     else if cfg!(target_os = "linux") {
